@@ -1,0 +1,189 @@
+{
+    "geocodingResults": {
+        "destination": {
+            "geocoderStatus": {},
+            "placeId": "ChIJT9bdnH7HdkgR_wmG8-12uKc",
+            "type": [
+                "establishment",
+                "point_of_interest",
+                "university"
+            ]
+        },
+        "origin": {
+            "geocoderStatus": {},
+            "placeId": "ChIJdavSaKjGdkgRzAWP_waDyBA",
+            "type": [
+                "establishment",
+                "point_of_interest",
+                "university"
+            ]
+        }
+    },
+    "routes": [
+        {
+            "description": "Parks Rd",
+            "distanceMeters": 735,
+            "duration": "602s",
+            "legs": [
+                {
+                    "distanceMeters": 735,
+                    "duration": "603s",
+                    "endLocation": {
+                        "latLng": {
+                            "latitude": 51.7535475,
+                            "longitude": -1.2562985
+                        }
+                    },
+                    "localizedValues": {
+                        "distance": {
+                            "text": "0.7 km"
+                        },
+                        "duration": {
+                            "text": "10 mins"
+                        },
+                        "staticDuration": {
+                            "text": "10 mins"
+                        }
+                    },
+                    "polyline": {
+                        "encodedPolyline": "od|zHxntFl@YrB{@RKpAk@xCaBjDoBjEeCHDBEV`@d@vADRZtAZfElAc@fA_@"
+                    },
+                    "startLocation": {
+                        "latLng": {
+                            "latitude": 51.7589615,
+                            "longitude": -1.2569271
+                        }
+                    },
+                    "staticDuration": "603s",
+                    "steps": [
+                        {
+                            "distanceMeters": 472,
+                            "endLocation": {
+                                "latLng": {
+                                    "latitude": 51.754992099999996,
+                                    "longitude": -1.2545016
+                                }
+                            },
+                            "localizedValues": {
+                                "distance": {
+                                    "text": "0.5 km"
+                                },
+                                "staticDuration": {
+                                    "text": "6 mins"
+                                }
+                            },
+                            "navigationInstruction": {
+                                "instructions": "Head south on Parks Rd toward Museum Rd",
+                                "maneuver": "DEPART"
+                            },
+                            "polyline": {
+                                "encodedPolyline": "od|zHxntFl@YrB{@RKpAk@xCaBjDoBjEeC"
+                            },
+                            "startLocation": {
+                                "latLng": {
+                                    "latitude": 51.7589615,
+                                    "longitude": -1.2569271
+                                }
+                            },
+                            "staticDuration": "385s",
+                            "travelMode": "WALK"
+                        },
+                        {
+                            "distanceMeters": 176,
+                            "endLocation": {
+                                "latLng": {
+                                    "latitude": 51.754298399999996,
+                                    "longitude": -1.2566376
+                                }
+                            },
+                            "localizedValues": {
+                                "distance": {
+                                    "text": "0.2 km"
+                                },
+                                "staticDuration": {
+                                    "text": "2 mins"
+                                }
+                            },
+                            "navigationInstruction": {
+                                "instructions": "At the roundabout, take the 1st exit onto Broad St/National Cycle Rte 57",
+                                "maneuver": "ROUNDABOUT_LEFT"
+                            },
+                            "polyline": {
+                                "encodedPolyline": "uk{zHr_tFHDBEV`@d@vADRZtAZfE"
+                            },
+                            "startLocation": {
+                                "latLng": {
+                                    "latitude": 51.754992099999996,
+                                    "longitude": -1.2545016
+                                }
+                            },
+                            "staticDuration": "146s",
+                            "travelMode": "WALK"
+                        },
+                        {
+                            "distanceMeters": 87,
+                            "endLocation": {
+                                "latLng": {
+                                    "latitude": 51.7535475,
+                                    "longitude": -1.2562985
+                                }
+                            },
+                            "localizedValues": {
+                                "distance": {
+                                    "text": "87 m"
+                                },
+                                "staticDuration": {
+                                    "text": "1 min"
+                                }
+                            },
+                            "navigationInstruction": {
+                                "instructions": "Turn left onto Turl St\nDestination will be on the right",
+                                "maneuver": "TURN_LEFT"
+                            },
+                            "polyline": {
+                                "encodedPolyline": "kg{zH~ltFlAc@fA_@"
+                            },
+                            "startLocation": {
+                                "latLng": {
+                                    "latitude": 51.754298399999996,
+                                    "longitude": -1.2566376
+                                }
+                            },
+                            "staticDuration": "72s",
+                            "travelMode": "WALK"
+                        }
+                    ]
+                }
+            ],
+            "localizedValues": {
+                "distance": {
+                    "text": "0.7 km"
+                },
+                "duration": {
+                    "text": "10 mins"
+                },
+                "staticDuration": {
+                    "text": "10 mins"
+                }
+            },
+            "polyline": {
+                "encodedPolyline": "od|zHxntFl@YrB{@RKpAk@xCaBjDoBjEeCHDBEV`@d@vADRZtAZfElAc@fA_@"
+            },
+            "routeLabels": [
+                "DEFAULT_ROUTE"
+            ],
+            "staticDuration": "602s",
+            "travelAdvisory": {},
+            "viewport": {
+                "high": {
+                    "latitude": 51.7589615,
+                    "longitude": -1.2544978999999998
+                },
+                "low": {
+                    "latitude": 51.7535475,
+                    "longitude": -1.2569271
+                }
+            }
+        }
+    ]
+}
