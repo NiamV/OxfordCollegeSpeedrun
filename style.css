@@ -21,7 +21,7 @@
   width: 99%;
   display: flex;
   flex-direction: row;
-  margin:1px;
+  margin:0;
 }
 
 .form_pane {
