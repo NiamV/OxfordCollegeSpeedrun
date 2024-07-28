@@ -186,7 +186,7 @@ async function updateMap(ordered_colleges) {
 		    marker.setMap(map);
     }
 
-    decoded_path = google.maps.geometry.encoding.decodePath(college_paths[ordered_colleges.length-1][0]["routes"][0]["polyline"]["encodedPolyline"])
+    decoded_path = google.maps.geometry.encoding.decodePath(college_paths[ordered_colleges[ordered_colleges.length-1]][ordered_colleges[0]]["routes"][0]["polyline"]["encodedPolyline"])
     var flightPath = new google.maps.Polyline({
         path: decoded_path,
         geodesic: true,
