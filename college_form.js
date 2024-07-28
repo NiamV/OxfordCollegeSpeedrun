@@ -121,7 +121,7 @@ let waypointMarker = {
 }
 
 async function updateMap(ordered_colleges) {
-    const position = { lat: 51.75, lng: -1.23 };
+    const position = { lat: 51.76, lng: -1.25 };
     // Request needed libraries.
     //@ts-ignore
     const { Map } = await google.maps.importLibrary("maps");
@@ -131,7 +131,7 @@ async function updateMap(ordered_colleges) {
 
     // The map, centered at Uluru
     map = new Map(document.getElementById("map"), {
-        zoom: 14,
+        zoom: 15,
         center: position,
         mapId: "DEMO_MAP_ID",
     });
@@ -261,25 +261,32 @@ function applyThings() {
         return distance_matrix[a.x][b.x];
     };
 
-    var solution = solve(points, 0.999, false, distancePoints, true)
+    var solution = solve(points, 0.999, false, distancePoints, false)
 
     console.log(solution);
     
     ordered_colleges = solution.map((i) => included_colleges[i])
 
-    console.log(ordered_colleges)
+    console.log(ordered_colleges.keys)
 
     updateMap(ordered_colleges)
 
     var text = document.getElementById("form_output")
-    text.innerHTML= ordered_colleges
+    var college_index = 0
+    text.innerHTML= ordered_colleges.map((y) => {
+        college_index += 1;
+        console.log(college_index);
+        return ` ${college_index}: ${y}`
+    })
 };
 
 function update_checkbox_value(college_name) {
+    console.log("######")
     console.log(college_name);
     console.log(college_name.value);
 
     college_name.setAttribute("value", ((college_name.value == "false") ? "true" : "false") );
+    college_name.setAttribute("checked", ((college_name.checked == "false") ? "true" : "false") );
 
     console.log(college_name);
 };
@@ -292,14 +299,16 @@ form.setAttribute("name", "choose_colleges")
 
 for (const college in college_list){
     const college_div = document.createElement("div")
-    college_div.setAttribute("style", "border-style: solid; width: 200px; border-width: 1px; border-radius:3px")
+    college_div.setAttribute("style", "border-style: solid; border-width: 1px; border-radius:3px; margin:2px;")
 
     const radio = document.createElement("input")
     radio.setAttribute('type', 'checkbox');
     radio.setAttribute('id', college);
     radio.setAttribute("checked", true);
     radio.setAttribute('value', true);
-    college_div.setAttribute("onclick", `update_checkbox_value(${college})`);
+
+    college_div.setAttribute("for", college)
+    radio.setAttribute("onclick", `update_checkbox_value(${college})`);
 
     const label = document.createElement("label")
     label.setAttribute("for", college)
@@ -315,6 +324,7 @@ const submit = document.createElement("input")
 submit.setAttribute("type", "button")
 submit.setAttribute("value", "Submit")
 submit.setAttribute("onclick", "applyThings()")
+submit.setAttribute("style", "border-style: solid; width: 100%; border-width: 1px; border-radius:3px; margin:2px")// :hover {background: red}")
 form.appendChild(submit)
 
 const element = document.getElementById("form");
