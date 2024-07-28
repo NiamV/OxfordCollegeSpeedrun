@@ -136,7 +136,7 @@ async function updateMap(ordered_colleges) {
         mapId: "DEMO_MAP_ID",
     });
 
-    console.log("----------------------------")
+    // console.log("----------------------------")
 
     // console.log(ordered_colleges[0], ordered_colleges[1])
 
@@ -155,7 +155,7 @@ async function updateMap(ordered_colleges) {
     // flightPath.setMap(map);
 
     for(i=0;i<ordered_colleges.length-1;i++){
-        console.log(i)
+        // console.log(i)
 
         decoded_path = google.maps.geometry.encoding.decodePath(college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["polyline"]["encodedPolyline"])
         var flightPath = new google.maps.Polyline({
@@ -168,7 +168,7 @@ async function updateMap(ordered_colleges) {
 
         flightPath.setMap(map);
 
-        console.log(college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["legs"][0])
+        // console.log(college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["legs"][0])
 
         var marker = new google.maps.Marker({
 			position: {
@@ -203,15 +203,15 @@ async function updateMap(ordered_colleges) {
 }
 
 function applyThings() {
-    console.log("Oops")
+    // console.log("Oops")
 
-    console.log(
-        Array.prototype.slice.call(
-            (document.forms["choose_colleges"]).children
-        ).map(
-            (a) => Array.prototype.slice.call((a.children)).filter((b) => b.type == "checkbox")
-        ).filter((c) =>c.length > 0)
-    )
+    // console.log(
+    //     Array.prototype.slice.call(
+    //         (document.forms["choose_colleges"]).children
+    //     ).map(
+    //         (a) => Array.prototype.slice.call((a.children)).filter((b) => b.type == "checkbox")
+    //     ).filter((c) =>c.length > 0)
+    // )
 
     var form_result = Array.prototype.slice.call(
         (document.forms["choose_colleges"]).children
@@ -223,7 +223,7 @@ function applyThings() {
         (z) => ({"college_name": z[0].id, "include": z[0].value})
     )
 
-    console.log(form_result)
+    // console.log(form_result)
 
     included_colleges = form_result.filter(
         (y) => y["include"] == "true"
@@ -231,7 +231,7 @@ function applyThings() {
         (z) => z["college_name"]
     )
 
-    console.log(included_colleges)
+    // console.log(included_colleges)
 
     var distance_matrix = new Array(included_colleges.length);
 
@@ -250,7 +250,7 @@ function applyThings() {
         distance_matrix[i][i] = 0
     }
 
-    console.log(distance_matrix);
+    // console.log(distance_matrix);
     
     var points = []
     for (i=0; i<included_colleges.length; i++){
@@ -263,11 +263,11 @@ function applyThings() {
 
     var solution = solve(points, 0.999, false, distancePoints, false)
 
-    console.log(solution);
+    // console.log(solution);
     
     ordered_colleges = solution.map((i) => included_colleges[i])
 
-    console.log(ordered_colleges.keys)
+    // console.log(ordered_colleges.keys)
 
     updateMap(ordered_colleges)
 
@@ -275,20 +275,19 @@ function applyThings() {
     var college_index = 0
     text.innerHTML= ordered_colleges.map((y) => {
         college_index += 1;
-        console.log(college_index);
         return ` ${college_index}: ${y}`
     })
 };
 
 function update_checkbox_value(college_name) {
-    console.log("######")
-    console.log(college_name);
-    console.log(college_name.value);
+    // console.log("######")
+    // console.log(college_name);
+    // console.log(college_name.value);
 
     college_name.setAttribute("value", ((college_name.value == "false") ? "true" : "false") );
     college_name.setAttribute("checked", ((college_name.checked == "false") ? "true" : "false") );
 
-    console.log(college_name);
+    // console.log(college_name);
 };
 
 
@@ -329,4 +328,4 @@ form.appendChild(submit)
 
 const element = document.getElementById("form");
 element.appendChild(form);
-console.log("hi")
+// console.log("hi")
