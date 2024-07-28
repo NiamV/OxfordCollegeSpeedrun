@@ -110,13 +110,118 @@ function solve(points, temp_coeff = 0.999, callback, distance = euclidean, keep_
 
 // -----------------------------------------------------------
 
+let waypointMarker = {
+	path: google.maps.SymbolPath.CIRCLE,
+	fillColor: 'black',
+	strokeColor: 'black',
+	strokeWeight: 10,
+    strokeOpacity: 1,
+	scale: 5,
+	textColor: 'white'
+}
+
+async function updateMap(ordered_colleges) {
+    const position = { lat: 51.75, lng: -1.23 };
+    // Request needed libraries.
+    //@ts-ignore
+    const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+    const directionsService = new google.maps.DirectionsService();
+
+    // The map, centered at Uluru
+    map = new Map(document.getElementById("map"), {
+        zoom: 14,
+        center: position,
+        mapId: "DEMO_MAP_ID",
+    });
+
+    console.log("----------------------------")
+
+    // console.log(ordered_colleges[0], ordered_colleges[1])
+
+    // console.log(college_paths[ordered_colleges[0]][ordered_colleges[1]]["routes"][0]["polyline"]["encodedPolyline"])
+
+    // decoded_path = google.maps.geometry.encoding.decodePath(college_paths[ordered_colleges[0]][ordered_colleges[1]]["routes"][0]["polyline"]["encodedPolyline"])
+
+    // const flightPath = new google.maps.Polyline({
+    //     path: decoded_path,
+    //     geodesic: true,
+    //     strokeColor: "#FF0000",
+    //     strokeOpacity: 1.0,
+    //     strokeWeight: 2,
+    // });
+    
+    // flightPath.setMap(map);
+
+    for(i=0;i<ordered_colleges.length-1;i++){
+        console.log(i)
+
+        decoded_path = google.maps.geometry.encoding.decodePath(college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["polyline"]["encodedPolyline"])
+        var flightPath = new google.maps.Polyline({
+            path: decoded_path,
+            geodesic: true,
+            strokeColor: "hsl(" + (360 * i / ordered_colleges.length) + ",80%,50%)",
+            strokeOpacity: 0.5,
+            strokeWeight: 5,
+        });
+
+        flightPath.setMap(map);
+
+        console.log(college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["legs"][0])
+
+        var marker = new google.maps.Marker({
+			position: {
+                "lat": college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["legs"][0]["startLocation"]["latLng"]["latitude"],
+                "lng": college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["legs"][0]["startLocation"]["latLng"]["longitude"]
+            },
+			icon: waypointMarker,
+			title:"Hello World!",
+			label: {
+				text: (i+1).toString(),
+				color: 'white'
+			}
+		});
+
+		marker.setMap(map);
+    }
+
+    var marker = new google.maps.Marker({
+        position: {
+            "lat": college_paths[ordered_colleges[ordered_colleges.length-1]][ordered_colleges[0]]["routes"][0]["legs"][0]["startLocation"]["latLng"]["latitude"],
+            "lng": college_paths[ordered_colleges[ordered_colleges.length-1]][ordered_colleges[0]]["routes"][0]["legs"][0]["startLocation"]["latLng"]["longitude"]
+        },
+        icon: waypointMarker,
+        title:"Hello World!",
+        label: {
+            text: (ordered_colleges.length).toString(),
+            color: 'white'
+        }
+    });
+
+    marker.setMap(map);
+}
+
 function applyThings() {
     console.log("Oops")
 
+    console.log(
+        Array.prototype.slice.call(
+            (document.forms["choose_colleges"]).children
+        ).map(
+            (a) => Array.prototype.slice.call((a.children)).filter((b) => b.type == "checkbox")
+        ).filter((c) =>c.length > 0)
+    )
+
     var form_result = Array.prototype.slice.call(
         (document.forms["choose_colleges"]).children
-    ).filter((y) => y.type == "checkbox")
-    .map((z) => ({"college_name": z.id, "include": z.value}))
+    ).map(
+        (a) => Array.prototype.slice.call((a.children)).filter((b) => b.type == "checkbox")
+    ).filter(
+        (c) =>c.length > 0
+    ).map(
+        (z) => ({"college_name": z[0].id, "include": z[0].value})
+    )
 
     console.log(form_result)
 
@@ -136,7 +241,6 @@ function applyThings() {
 
     for(var i=0; i<included_colleges.length; i++){
         for(var j=i+1; j<included_colleges.length; j++){
-            console.log(i, j)
             distance_matrix[i][j] = college_paths[included_colleges[i]][included_colleges[j]]["routes"][0]["distanceMeters"]
             distance_matrix[j][i] = college_paths[included_colleges[i]][included_colleges[j]]["routes"][0]["distanceMeters"]
         }
@@ -165,6 +269,8 @@ function applyThings() {
 
     console.log(ordered_colleges)
 
+    updateMap(ordered_colleges)
+
     var text = document.getElementById("form_output")
     text.innerHTML= ordered_colleges
 };
@@ -185,19 +291,24 @@ form.setAttribute("name", "choose_colleges")
 
 
 for (const college in college_list){
+    const college_div = document.createElement("div")
+    college_div.setAttribute("style", "border-style: solid; width: 200px; border-width: 1px; border-radius:3px")
+
     const radio = document.createElement("input")
     radio.setAttribute('type', 'checkbox');
     radio.setAttribute('id', college);
     radio.setAttribute("checked", true);
     radio.setAttribute('value', true);
-    radio.setAttribute("onclick", `update_checkbox_value(${college})`);
+    college_div.setAttribute("onclick", `update_checkbox_value(${college})`);
 
     const label = document.createElement("label")
     label.setAttribute("for", college)
     label.innerHTML = college
 
-    form.appendChild(radio)
-    form.appendChild(label)
+    college_div.appendChild(radio)
+    college_div.appendChild(label)
+
+    form.appendChild(college_div)
 }
 
 const submit = document.createElement("input")
