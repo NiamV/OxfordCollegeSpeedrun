@@ -171,20 +171,31 @@ async function updateMap(ordered_colleges) {
         // console.log(college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["legs"][0])
 
         var marker = new google.maps.Marker({
-			position: {
-                "lat": college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["legs"][0]["startLocation"]["latLng"]["latitude"],
-                "lng": college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["legs"][0]["startLocation"]["latLng"]["longitude"]
-            },
-			icon: waypointMarker,
-			title:"Hello World!",
-			label: {
-				text: (i+1).toString(),
-				color: 'white'
-			}
-		});
+          position: {
+                    "lat": college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["legs"][0]["startLocation"]["latLng"]["latitude"],
+                    "lng": college_paths[ordered_colleges[i]][ordered_colleges[i+1]]["routes"][0]["legs"][0]["startLocation"]["latLng"]["longitude"]
+                },
+          icon: waypointMarker,
+          title:"Hello World!",
+          label: {
+            text: (i+1).toString(),
+            color: 'white'
+          }
+        });
 
-		marker.setMap(map);
+		    marker.setMap(map);
     }
+
+    decoded_path = google.maps.geometry.encoding.decodePath(college_paths[ordered_colleges.length-1][0]["routes"][0]["polyline"]["encodedPolyline"])
+    var flightPath = new google.maps.Polyline({
+        path: decoded_path,
+        geodesic: true,
+        strokeColor: "hsl(" + (360 * ordered_colleges.length / ordered_colleges.length) + ",80%,50%)",
+        strokeOpacity: 0.5,
+        strokeWeight: 5,
+    });
+
+    flightPath.setMap(map);
 
     var marker = new google.maps.Marker({
         position: {
@@ -200,6 +211,22 @@ async function updateMap(ordered_colleges) {
     });
 
     marker.setMap(map);
+}
+
+function shuffle(array) {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
 }
 
 function applyThings() {
@@ -231,7 +258,9 @@ function applyThings() {
         (z) => z["college_name"]
     )
 
-    // console.log(included_colleges)
+    shuffle(included_colleges)
+
+    console.log(included_colleges)
 
     var distance_matrix = new Array(included_colleges.length);
 
